@@ -29,7 +29,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $data['user_id'] = auth()->id;
+        $data['user_id'] = $request->user()->id;
 
         $task = Task::create($data);
 
@@ -43,9 +43,9 @@ class TaskController extends Controller
     /**
      * Display the specified task.
      */
-    public function show(Task $task): JsonResponse
+    public function show(Request $request, Task $task): JsonResponse
     {
-        $this->authorizeTask($task);
+        $this->authorizeTask($request, $task);
 
         return response()->json([
             'success' => true,
@@ -58,7 +58,7 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
-        $this->authorizeTask($task);
+        $this->authorizeTask($request, $task);
 
         $task->update($request->validated());
 
@@ -73,7 +73,7 @@ class TaskController extends Controller
      */
     public function destroy(Request $request, Task $task): JsonResponse
     {
-        $this->authorizeTask($task);
+        $this->authorizeTask($request, $task);
 
         $task->delete();
 
@@ -86,9 +86,9 @@ class TaskController extends Controller
     /**
      * Ensure the task belongs to the authenticated user.
      */
-    protected function authorizeTask(Task $task): void
+    protected function authorizeTask(Request $request, Task $task): void
     {
-        if ($task->user_id !== auth()->id) {
+        if ($task->user_id !== $request->user()->id) {
             abort(403, 'Unauthorized action.');
         }
     }
