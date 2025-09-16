@@ -22,8 +22,8 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => $user ? true : false,
-            'user'    => $user
-        ]);
+            'user_id' => $user?->id
+        ], 201);
     }
 
     /**
@@ -37,7 +37,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'auth failed'
-            ]);
+            ], 401);
         }
 
         $token = Auth::user()->createToken('token');

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class StoreTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user() !== null;
     }
 
     /**
@@ -22,10 +22,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3', 'max:70'],
-            'password' => ['required', 'min:8', 'max:16'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'birthday' => ['required', 'date', 'before:today', 'date_format:Y-m-d']
+            'title' => ['required', 'string', 'max:255'],
+            'priority' => ['required', 'in:high,medium,low'],
+            'completed' => ['sometimes', 'boolean'],
+            'start_time' => ['nullable', 'date'],
+            'due_time' => ['nullable', 'date', 'after:start_time']
         ];
     }
 }
