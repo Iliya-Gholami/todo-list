@@ -22,8 +22,9 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => $user ? true : false,
-            'user_id' => $user?->id
-        ], 201);
+            'message' => $user ? 'User created successfully.' : 'User creation failed.',
+            'user_id' => $user?->id,
+        ], $user ? 201 : 500);
     }
 
     /**
@@ -36,7 +37,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'success' => false,
-                'message' => 'auth failed'
+                'message' => 'Auth failed.',
             ], 401);
         }
 
@@ -44,7 +45,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'token' => $token->plainTextToken
+            'token' => $token->plainTextToken,
         ]);
     }
 }
