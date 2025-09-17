@@ -21,14 +21,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (ThrottleRequestsException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Too many attempts'
+                'message' => 'Too many attempts.'
             ], 429);
         });
 
         $exceptions->render(function (HttpResponseException $e, Validator $validator) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => 'Validation failed.',
                 'errors' => $validator->errors()
             ], 422);
         });

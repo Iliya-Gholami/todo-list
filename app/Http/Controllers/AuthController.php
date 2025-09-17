@@ -13,6 +13,9 @@ class AuthController extends Controller
 {
     /**
      * Creates new user in the database.
+     * 
+     * @param RegisterRequest $request
+     * @param JsonResponse
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -29,6 +32,9 @@ class AuthController extends Controller
 
     /**
      * User login.
+     * 
+     * @param LoginRequest $request
+     * @return JsonResponse
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -41,7 +47,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = Auth::user()->createToken('auth_token');
+        $token = Auth::user()->createToken('token');
 
         return response()->json([
             'success' => true,

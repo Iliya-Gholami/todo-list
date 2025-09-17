@@ -30,5 +30,11 @@ class AppServiceProvider extends ServiceProvider
                 $request->user()?->id ?: $request->ip()
             );
         });
+
+        RateLimiter::for('upload_profile', function (Request $request) {
+            return Limit::perDay(2)->by(
+                $request->user()->id
+            );
+        });
     }
 }

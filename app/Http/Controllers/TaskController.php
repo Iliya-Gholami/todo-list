@@ -12,6 +12,9 @@ class TaskController extends Controller
 {
     /**
      * Display a paginated listing of the tasks.
+     * 
+     * @param Request $request
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -25,6 +28,9 @@ class TaskController extends Controller
 
     /**
      * Store a newly created task.
+     * 
+     * @param StoreTaskRequest $request
+     * @return JsonResponse
      */
     public function store(StoreTaskRequest $request): JsonResponse
     {
@@ -42,6 +48,10 @@ class TaskController extends Controller
 
     /**
      * Display the specified task.
+     * 
+     * @param Request $request
+     * @param Task $task
+     * @return JsonResponse
      */
     public function show(Request $request, Task $task): JsonResponse
     {
@@ -55,6 +65,10 @@ class TaskController extends Controller
 
     /**
      * Update the specified task.
+     * 
+     * @param UpdateTaskRequest $request
+     * @param Task $task
+     * @return JsonResponse
      */
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
@@ -70,6 +84,10 @@ class TaskController extends Controller
 
     /**
      * Remove the specified task.
+     * 
+     * @param Request $request
+     * @param Task $task
+     * @return JsonResponse
      */
     public function destroy(Request $request, Task $task): JsonResponse
     {
@@ -85,6 +103,10 @@ class TaskController extends Controller
 
     /**
      * Ensure the task belongs to the authenticated user.
+     * 
+     * @param Request $request
+     * @param Task $task
+     * @return JsonResponse
      */
     protected function authorizeTask(Request $request, Task $task): void
     {
